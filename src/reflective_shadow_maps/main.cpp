@@ -2,9 +2,9 @@
 #include "reflective_shadow_maps.hpp"
 
 int main() {
-  ReflectiveShadowMapsApp app2;//("Test base project");
+  ReflectiveShadowMapsApp app;
 
-  app2.run();
+  app.run();
 
   return 0;
 }

@@ -7,6 +7,12 @@
 #include "plane.hpp"
 #include "cube.hpp"
 
+ReflectiveShadowMapsApp::ReflectiveShadowMapsApp(
+    const char* tWindowName,
+    const int tWindowWidth,
+    const int tWindowHeight
+    ) : CameraApp(tWindowName, tWindowWidth, tWindowHeight) {}
+
 void ReflectiveShadowMapsApp::setUpScene() {
   glEnable(GL_DEPTH_TEST);
   buildGeometry();
