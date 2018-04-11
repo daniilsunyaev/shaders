@@ -22,6 +22,11 @@ class SSAOApp : public CameraApp {
     void initBluredSSAO();
     void initRandomizedLookupHemisphere();
 
+    void renderGbuffer();
+    void renderRawSSAO();
+    void blurRawSSAO();
+    void performAOShading();
+
     unsigned int mGbufferFBO, mRawSSAOFBO, mBluredSSAOFBO;
     unsigned int mGtextures[3], mRawSSAOtexture, mBluredSSAOtexture;
     unsigned int mSSAORotationVectorsTexture;
@@ -34,10 +39,8 @@ class SSAOApp : public CameraApp {
 
     glm::vec3 mLightDirection = { 4.0f, 1.2f, 3.0f };
 
-    Shader mRenderShader = { "./vertex.vert", "./fragment.frag" };
     Shader mGbufferShader = { "./gbuffer.vert", "./gbuffer.frag" };
     Shader mSSAOShader = { "./post.vert", "./ssao.frag" };
     Shader mBlurShader = { "./post.vert", "./blur.frag" };
-    Shader mPostProcessingShader = { "./post.vert", "./post.frag" };
     Shader mIlluminationShader = { "./post.vert", "./illumination.frag" };
 };

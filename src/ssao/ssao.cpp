@@ -149,6 +149,13 @@ void SSAOApp::mainLoopBody() {
 
   glViewport(0, 0, mWindowWidth, mWindowHeight);
 
+  renderGbuffer();
+  renderRawSSAO();
+  blurRawSSAO();
+  performAOShading();
+}
+
+void SSAOApp::renderGbuffer() {
   glBindFramebuffer(GL_FRAMEBUFFER, mGbufferFBO);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -158,7 +165,9 @@ void SSAOApp::mainLoopBody() {
   for(auto& figureP : mScene) {
     figureP->render(&mGbufferShader);
   }
+}
 
+void SSAOApp::renderRawSSAO() {
   glBindFramebuffer(GL_FRAMEBUFFER, mRawSSAOFBO);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   mSSAOShader.use();
@@ -176,7 +185,10 @@ void SSAOApp::mainLoopBody() {
   glActiveTexture(GL_TEXTURE3);
   glBindTexture(GL_TEXTURE_2D, mGtextures[2]);
   mPostProcessingPlane.render();
+}
 
+
+void SSAOApp::blurRawSSAO() {
   glBindFramebuffer(GL_FRAMEBUFFER, mBluredSSAOFBO);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   mBlurShader.use();
@@ -184,7 +196,9 @@ void SSAOApp::mainLoopBody() {
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, mRawSSAOtexture);
   mPostProcessingPlane.render();
+}
 
+void SSAOApp::performAOShading() {
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   mIlluminationShader.use();
