@@ -9,7 +9,9 @@
 
 class ReflectiveShadowMapsApp : public CameraApp {
   public:
-    using CameraApp::CameraApp;
+    ReflectiveShadowMapsApp(const char* tWindowName = "Reflective Shadow maps",
+        const int tWindowWidth = 800,
+        const int tWindowHeight = 600);
     ~ReflectiveShadowMapsApp();
   private:
     void setUpScene();

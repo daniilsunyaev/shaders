@@ -15,4 +15,6 @@ include_directories(src/shared)
 include_directories(src/base)
 add_subdirectory(src/shared)
 add_subdirectory(src/base)
+
 add_subdirectory(src/reflective_shadow_maps)
+add_subdirectory(src/ssao)
