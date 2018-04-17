@@ -6,6 +6,7 @@
 #include "ssao.hpp"
 #include "plane.hpp"
 #include "cube.hpp"
+#include "sphere.hpp"
 
 SSAOApp::SSAOApp(
     const char* tWindowName,
@@ -261,9 +262,8 @@ void SSAOApp::buildGeometry() {
 
   // another figure
   model = glm::mat4();
-  model = glm::translate(model, glm::vec3(-1.5f, -0.4f, -2.0f));
-  model = glm::scale(model, glm::vec3(0.3f, 0.5f, 0.3f));
-  model = glm::rotate(model, glm::radians(35.0f), glm::vec3(0.0f, 0.5f, 0.0f));
-  cube = new Cube(model, {1.0f, 0.4f, 0.1f});
-  mScene.push_back(cube);
+  model = glm::translate(model, glm::vec3(-1.4f, -0.4f, -2.0f));
+  model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+  auto sphere = new Sphere(model, {1.0f, 0.4f, 0.1f});
+  mScene.push_back(sphere);
 }
