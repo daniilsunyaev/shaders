@@ -13,15 +13,14 @@ Sphere::Sphere(glm::mat4 tModel, glm::vec3 tColor) : mModel(tModel), mColor(tCol
     glGenBuffers(1, &mVBO);
     glGenBuffers(1, &mEBO);
     glBindVertexArray(mVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 
+    glBindBuffer(GL_ARRAY_BUFFER, mVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(mVerts), mVerts, GL_STATIC_DRAW);
-    //  glBufferData(GL_ARRAY_BUFFER, data.size()*sizeof(float),
-     //     &data[0], GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(unsigned int),
         &mIndices[0], GL_STATIC_DRAW);
+
     float stride = (3+2+3)*sizeof(float);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
@@ -45,13 +44,15 @@ Sphere::~Sphere() {
   if(mVAO > 0) {
     glDeleteVertexArrays(1, &mVAO);
     glDeleteBuffers(1, &mVBO);
+    glDeleteBuffers(1, &mEBO);
     mVAO = 0;
     mVBO = 0;
+    mEBO = 0;
   }
 }
 
 void Sphere::generateVertexes() {
-  const float PI = 3.14159265359;
+  const float PI = glm::pi<float>();
   std::vector<glm::vec3> positions;
   std::vector<glm::vec2> uv;
   std::vector<glm::vec3> normals;
@@ -99,16 +100,6 @@ void Sphere::generateVertexes() {
 
     mVerts[i*8+6] = uv[i].x;
     mVerts[i*8+7] = uv[i].y;
-
-    ////if (normals.size() > 0) {
-    //  data.push_back(normals[i].x);
-    //  data.push_back(normals[i].y);
-    //  data.push_back(normals[i].z);
-    ////}
-    //if (uv.size() > 0) {
-    //  data.push_back(uv[i].u);
-    //  data.push_back(uv[i].v);
-    //}
   }
 }
 
