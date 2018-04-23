@@ -22,3 +22,8 @@ target_include_directories(geometry PRIVATE ${OPENGL_INCLUDE_DIR}
   PRIVATE ${GLEW_INCLUDE_DIRS})
 target_link_libraries(geometry ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES})
 target_link_libraries(geometry shader)
+
+add_library(textures STATIC textures.hpp textures.cpp)
+target_include_directories(textures PRIVATE ${OPENGL_INCLUDE_DIR}
+  PRIVATE ${GLEW_INCLUDE_DIRS})
+target_link_libraries(textures ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES})

@@ -21,13 +21,17 @@ Sphere::Sphere(glm::mat4 tModel, glm::vec3 tColor) : mModel(tModel), mColor(tCol
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(unsigned int),
         &mIndices[0], GL_STATIC_DRAW);
 
-    float stride = (3+2+3)*sizeof(float);
+    float stride = (3+3+2+3+3)*sizeof(float);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, stride, (void*)(8 * sizeof(float)));
+    glEnableVertexAttribArray(4);
+    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, stride, (void*)(11 * sizeof(float)));
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -56,6 +60,8 @@ void Sphere::generateVertexes() {
   std::vector<glm::vec3> positions;
   std::vector<glm::vec2> uv;
   std::vector<glm::vec3> normals;
+  std::vector<glm::vec3> us;
+  std::vector<glm::vec3> vs;
 
   for(int t=0; t<=THETAS; t++) {
     float vSegment = (float)t / (float)THETAS;
@@ -69,6 +75,11 @@ void Sphere::generateVertexes() {
       positions.push_back(glm::vec3(xPos, yPos, zPos));
       uv.push_back(glm::vec2(uSegment, vSegment));
       normals.push_back(glm::vec3(xPos, yPos, zPos));
+
+      glm::vec3 u = glm::cross(normals.back(), glm::vec3(0.0f, 1.0f, 0.0f));
+      glm::vec3 v = glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), u);
+      us.push_back(u);
+      vs.push_back(v);
     }
   }
 
@@ -90,16 +101,25 @@ void Sphere::generateVertexes() {
 
   std::vector<float> data;
   for(int i = 0; i < positions.size(); ++i) {
-    mVerts[i*8] = positions[i].x;
-    mVerts[i*8+1] = positions[i].y;
-    mVerts[i*8+2] = positions[i].z;
+    // stride = 14
+    mVerts[i*14] = positions[i].x;
+    mVerts[i*14+1] = positions[i].y;
+    mVerts[i*14+2] = positions[i].z;
 
-    mVerts[i*8+3] = normals[i].x;
-    mVerts[i*8+4] = normals[i].y;
-    mVerts[i*8+5] = normals[i].z;
+    mVerts[i*14+3] = normals[i].x;
+    mVerts[i*14+4] = normals[i].y;
+    mVerts[i*14+5] = normals[i].z;
 
-    mVerts[i*8+6] = uv[i].x;
-    mVerts[i*8+7] = uv[i].y;
+    mVerts[i*14+6] = uv[i].x;
+    mVerts[i*14+7] = uv[i].y;
+
+    mVerts[i*14+8] = us[i].x;
+    mVerts[i*14+9] = us[i].y;
+    mVerts[i*14+10] = us[i].z;
+
+    mVerts[i*14+11] = vs[i].x;
+    mVerts[i*14+12] = vs[i].y;
+    mVerts[i*14+13] = vs[i].z;
   }
 }
 
@@ -126,5 +146,5 @@ void Sphere::render(Shader* tShader) {
 GLuint Sphere::mVAO = 0;
 GLuint Sphere::mVBO = 0;
 GLuint Sphere::mEBO = 0;
-float Sphere::mVerts[(THETAS+1)*(PHIS+1)*8] = {};
+float Sphere::mVerts[(THETAS+1)*(PHIS+1)*14] = {};
 std::vector<unsigned int> Sphere::mIndices = {};

@@ -14,4 +14,4 @@ target_include_directories(base PUBLIC ${GLEW_INCLUDE_DIRS})
 target_link_libraries(base ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES}
   ${GLEW_LIBRARIES})
 
-target_link_libraries(base camera shader geometry)
+target_link_libraries(base camera shader geometry textures)
