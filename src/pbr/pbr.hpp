@@ -26,9 +26,11 @@ class PBRApp : public CameraApp {
     void buildBRDFLUT();
 
     void buildGeometry();
+    void loadMaterial(char const* tMaterialName);
 
     void renderEnvCubemap();
     void renderIrradianceCubemap();
+    void setMaterial(char const* tMaterialName);
 
     unsigned int mCaptureFBO, mCaptureRBO;
     unsigned int mEnvCubemapTexture;
@@ -53,7 +55,6 @@ class PBRApp : public CameraApp {
 
     Cube mSkyboxCube;
     Plane mPostProcessingPlane;
-    Sphere mBall;
 
     const char* ENV_MAP_PATH = "./Ditch_River/Ditch-River_2k.hdr";
     const char* IRRADIANCE_MAP_PATH = "./Ditch_River/Ditch-River_Env.hdr";

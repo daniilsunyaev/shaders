@@ -29,55 +29,11 @@ void PBRApp::setUpScene() {
   glDeleteFramebuffers(1, &mCaptureFBO);
   glDeleteRenderbuffers(1, &mCaptureRBO);
 
+  loadMaterial("plastic");
+  // possible options are:
+  // streaked_metal, rock, rusted_iron, marble, plastic
 
-  //buildGeometry();
-
-  mPBRShader.use();
-  //mAlbedo = loadTexture("./materials/streaked_metal/albedo.png");
-  //mAlbedo = loadTexture("./materials/rock/albedo.png");
-  //mAlbedo = loadTexture("./materials/rusted_iron/albedo.png");
-  //mAlbedo = loadTexture("./materials/marble/albedo.png");
-  mAlbedo = loadTexture("./materials/plastic/albedo.png");
-  mPBRShader.setInt("albedoTex", 3);
-  glActiveTexture(GL_TEXTURE3);
-  glBindTexture(GL_TEXTURE_2D, mAlbedo);
-
-  //mMetallic = loadTexture("./materials/streaked_metal/metallic.png");
-  //mMetallic = loadTexture("./materials/rock/metallic.png");
-  //mMetallic = loadTexture("./materials/rusted_iron/metallic.png");
-  //mMetallic = loadTexture("./materials/marble/metallic.png");
-  mMetallic = loadTexture("./materials/plastic/metallic.png");
-  mPBRShader.setInt("metallicTex", 4);
-  glActiveTexture(GL_TEXTURE4);
-  glBindTexture(GL_TEXTURE_2D, mMetallic);
-
-  //mRoughness = loadTexture("./materials/streaked_metal/roughness.png");
-  //mRoughness = loadTexture("./materials/rock/roughness.png");
-  //mRoughness = loadTexture("./materials/rusted_iron/roughness.png");
-  //mRoughness = loadTexture("./materials/marble/roughness.png");
-  mRoughness = loadTexture("./materials/plastic/roughness.png");
-  mPBRShader.setInt("roughnessTex", 5);
-  glActiveTexture(GL_TEXTURE5);
-  glBindTexture(GL_TEXTURE_2D, mRoughness);
-
-  //mAo = loadTexture("./materials/streaked_metal/ao.png");
-  //mAo = loadTexture("./materials/rock/ao.png");
-  //mAo = loadTexture("./materials/rusted_iron/ao.png");
-  //mAo = loadTexture("./materials/marble/ao.png");
-  mAo = loadTexture("./materials/plastic/ao.png");
-  mPBRShader.setInt("aoTex", 6);
-  glActiveTexture(GL_TEXTURE6);
-  glBindTexture(GL_TEXTURE_2D, mAo);
-
-  //mNormal = loadTexture("./materials/streaked_metal/normal.png");
-  //mNormal = loadTexture("./materials/rock/normal.png");
-  //mNormal = loadTexture("./materials/rusted_iron/normal.png");
-  //mNormal = loadTexture("./materials/marble/normal.png");
-  mNormal = loadTexture("./materials/plastic/normal.png");
-  mPBRShader.setInt("normalTex", 7);
-  glActiveTexture(GL_TEXTURE7);
-  glBindTexture(GL_TEXTURE_2D, mNormal);
-
+  buildGeometry();
 }
 
 PBRApp::~PBRApp() {
@@ -110,7 +66,7 @@ void PBRApp::buildCubemapFromEquirectmap(unsigned int tCubemapTextureId, int tSi
   }
   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  //glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -250,7 +206,9 @@ void PBRApp::mainLoopBody() {
   glActiveTexture(GL_TEXTURE7);
   glBindTexture(GL_TEXTURE_2D, mNormal);
 
-  mBall.render(&mPBRShader);
+  for(auto figureP : mScene) {
+    figureP->render(&mPBRShader);
+  }
 
   renderEnvCubemap();
 }
@@ -275,55 +233,40 @@ void PBRApp::renderIrradianceCubemap() {
   mSkyboxCube.render();
 }
 
+void PBRApp::loadMaterial(char const* tMaterialName) {
+  mPBRShader.use();
+  std::string materialPath = "./materials/";
+  materialPath += tMaterialName;
+
+  mAlbedo = loadTexture(materialPath + "/albedo.png");
+  mPBRShader.setInt("albedoTex", 3);
+  glActiveTexture(GL_TEXTURE3);
+  glBindTexture(GL_TEXTURE_2D, mAlbedo);
+
+  mMetallic = loadTexture(materialPath +"/metallic.png");
+  mPBRShader.setInt("metallicTex", 4);
+  glActiveTexture(GL_TEXTURE4);
+  glBindTexture(GL_TEXTURE_2D, mMetallic);
+
+  mRoughness = loadTexture(materialPath + "/roughness.png");
+  mPBRShader.setInt("roughnessTex", 5);
+  glActiveTexture(GL_TEXTURE5);
+  glBindTexture(GL_TEXTURE_2D, mRoughness);
+
+  mAo = loadTexture(materialPath + "/ao.png");
+  mPBRShader.setInt("aoTex", 6);
+  glActiveTexture(GL_TEXTURE6);
+  glBindTexture(GL_TEXTURE_2D, mAo);
+
+  mNormal = loadTexture(materialPath + "/normal.png");
+  mPBRShader.setInt("normalTex", 7);
+  glActiveTexture(GL_TEXTURE7);
+  glBindTexture(GL_TEXTURE_2D, mNormal);
+}
+
 void PBRApp::buildGeometry() {
-  // streaked metal
   auto model = glm::mat4();
-  model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
   model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
-  auto sphere = new Sphere(model);
-  mScene.push_back(sphere);
-
-  // ceiling
-  //model = glm::mat4();
-  //model = glm::scale(model, glm::vec3(2.0f, 0.1f, 3.0f));
-  //model = glm::translate(model, glm::vec3(0.0f, 10.0f, 0.0f));
-  //cube = new Cube(model, {0.6f, 0.6f, 0.6f});
-  //mScene.push_back(cube);
-
-  //// left wall
-  //model = glm::mat4();
-  //model = glm::scale(model, glm::vec3(0.1f, 1.1f, 3.0f));
-  //model = glm::translate(model, glm::vec3(-21.0f, 0.0f, 0.0f));
-  //cube = new Cube(model, {0.5f, 0.5f, 0.5f});
-  //mScene.push_back(cube);
-
-  //// front wall
-  //model = glm::mat4();
-  //model = glm::scale(model, glm::vec3(2.0f, 1.1f, 0.1f));
-  //model = glm::translate(model, glm::vec3(0.0f, 0.0f, -31.0f));
-  //cube = new Cube(model, {0.5f, 0.5f, 0.5f});
-  //mScene.push_back(cube);
-
-  //// back wall
-  //model = glm::mat4();
-  //model = glm::scale(model, glm::vec3(2.0f, 1.1f, 0.1f));
-  //model = glm::translate(model, glm::vec3(0.0f, 0.0f, 31.0f));
-  //cube = new Cube(model, {0.5f, 0.5f, 0.5f});
-  //mScene.push_back(cube);
-
-  //// figure
-  //model = glm::mat4();
-  //model = glm::translate(model, glm::vec3(-0.5f, -0.4f, -2.0f));
-  //model = glm::scale(model, glm::vec3(0.3f, 0.5f, 0.3f));
-  //model = glm::rotate(model, glm::radians(-25.0f), glm::vec3(0.0f, 0.5f, 0.0f));
-  //cube = new Cube(model, {0.0f, 0.4f, 1.0f});
-  //mScene.push_back(cube);
-
-  //// another figure
-  //model = glm::mat4();
-  //model = glm::translate(model, glm::vec3(-1.5f, -0.4f, -2.0f));
-  //model = glm::scale(model, glm::vec3(0.3f, 0.5f, 0.3f));
-  //model = glm::rotate(model, glm::radians(35.0f), glm::vec3(0.0f, 0.5f, 0.0f));
-  //cube = new Cube(model, {1.0f, 0.4f, 0.1f});
-  //mScene.push_back(cube);
+  auto ballP = new Sphere(model);
+  mScene.push_back(ballP);
 }

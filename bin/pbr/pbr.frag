@@ -22,6 +22,7 @@ uniform samplerCube prefilterMap;
 uniform sampler2D brdfLUT;
 
 const float PI = 3.14159265359;
+const float MAX_REFLECTION_LOD = 3.0;
 
 vec3 frenelSchlick(float cosTheta, vec3 F0) {
   return F0 + (1-F0)*pow(1-cosTheta, 5.0);
@@ -65,7 +66,7 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness) {
 
 void main() {
   vec3 tangentN = texture(normalTex, fs_in.texCoord).rgb;
-  tangentN = normalize(tangentN * 2.0 - 1.0);
+  tangentN = normalize(tangentN * 2.0 - 1.0); // to [-1,1] range
   vec3 N = normalize(fs_in.TangentToWorld * tangentN);
   vec3 V = normalize(camPos - fs_in.WorldPos);
 
@@ -74,11 +75,10 @@ void main() {
   float roughness = texture(roughnessTex, fs_in.texCoord).r;
   float ao = texture(aoTex, fs_in.texCoord).r;
 
-  vec3 F0 = vec3(0.04);
-  F0 = mix(F0, albedo, metallic);
+  vec3 F0 = vec3(0.04); // normal glass reflection coefficient
+  F0 = mix(F0, albedo, metallic); // metals are coloring reflected light
 
   vec3 R = reflect(-V,N);
-  const float MAX_REFLECTION_LOD = 3.0;
   vec3 prefilteredColor = textureLod(prefilterMap, R,
       roughness*MAX_REFLECTION_LOD).rgb;
 

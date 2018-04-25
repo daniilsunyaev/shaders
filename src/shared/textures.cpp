@@ -1,17 +1,22 @@
 #include <GL/glew.h>
 #include <iostream>
+#include <string>
 #include "textures.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-unsigned int loadTextureF(char const * path) {
+unsigned int loadTextureF(const std::string& tPath) {
+  loadTextureF(tPath.c_str());
+}
+
+unsigned int loadTextureF(char const * tPath) {
   unsigned int textureID;
   glGenTextures(1, &textureID);
 
   int width, height, nrComponents;
   stbi_set_flip_vertically_on_load(true);
-  float *data = stbi_loadf(path, &width, &height, &nrComponents, 0);
+  float *data = stbi_loadf(tPath, &width, &height, &nrComponents, 0);
 
   if (data)  {
     if(width > GL_MAX_TEXTURE_SIZE || height > GL_MAX_TEXTURE_SIZE) {
@@ -32,20 +37,24 @@ unsigned int loadTextureF(char const * path) {
       stbi_image_free(data);
     }
   } else {
-    std::cout << "Texture failed to load at path: " << path << std::endl;
+    std::cout << "Texture failed to load at path: " << tPath << std::endl;
     stbi_image_free(data);
   }
 
   return textureID;
 }
 
-unsigned int loadTexture(char const * path) {
+unsigned int loadTexture(const std::string& tPath) {
+  loadTexture(tPath.c_str());
+}
+
+unsigned int loadTexture(char const * tPath) {
   unsigned int textureID;
   glGenTextures(1, &textureID);
 
   int width, height, nrComponents;
   stbi_set_flip_vertically_on_load(true);
-  unsigned char *data = stbi_load(path, &width, &height, &nrComponents, 0);
+  unsigned char *data = stbi_load(tPath, &width, &height, &nrComponents, 0);
   if (data)
   {
     GLenum format;
@@ -69,7 +78,7 @@ unsigned int loadTexture(char const * path) {
   }
   else
   {
-    std::cout << "Texture failed to load at path: " << path << std::endl;
+    std::cout << "Texture failed to load at path: " << tPath << std::endl;
     stbi_image_free(data);
   }
 

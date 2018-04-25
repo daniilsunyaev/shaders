@@ -22,7 +22,7 @@ void main() {
   vs_out.WorldPos = vec3(model * vec4(aPos, 1.0f));
   vs_out.texCoord = aTexCoord;
 
-  vs_out.TangentToWorld = ((mat3(aTangent, aBitangent, aNormal)));
+  vs_out.TangentToWorld = mat3(aTangent, aBitangent, aNormal);
 
   mat3 normalMatrix = transpose(inverse(mat3(model)));
   vs_out.Normal = normalize(normalMatrix * aNormal);

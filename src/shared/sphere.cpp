@@ -76,15 +76,20 @@ void Sphere::generateVertexes() {
       uv.push_back(glm::vec2(uSegment, vSegment));
       normals.push_back(glm::vec3(xPos, yPos, zPos));
 
-      glm::vec3 u = glm::cross(normals.back(), glm::vec3(0.0f, 1.0f, 0.0f));
-      glm::vec3 v = glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), u);
+      glm::vec3 u;
+      if(std::abs(normals.back().y) < 0.999f) {
+        u = glm::cross(normals.back(), glm::vec3(0.0f, 1.0f, 0.0f));
+      } else {
+        u = glm::vec3(0.0f, 0.0f, 1.0f);
+      }
+      glm::vec3 v = glm::cross(normals.back(), u);
       us.push_back(u);
       vs.push_back(v);
     }
   }
 
   bool oddRow = false;
-  for (int t = 0; t <= THETAS; t++) {
+  for (int t = 0; t < THETAS; t++) {
     if (!oddRow) {
       for (int p = 0; p <= PHIS; p++) {
         mIndices.push_back(t * (PHIS + 1) + p);
