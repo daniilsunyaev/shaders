@@ -20,7 +20,7 @@ class Sphere : public GeometryObject {
     static GLuint mEBO;
     static const int THETAS = 16;
     static const int PHIS = 16;
-    static float mVerts[(THETAS+1)*(PHIS+1)*8];
+    static float mVerts[(THETAS+1)*(PHIS+1)*14];
     static std::vector<unsigned int> mIndices;
 
     void generateVertexes();
