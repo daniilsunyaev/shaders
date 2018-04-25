@@ -66,5 +66,4 @@ class PBRApp : public CameraApp {
     Shader mPrefilterShader = { "./skybox.vert", "./prefilter_convolution.frag" };
     Shader mBRDFShader = { "./post.vert", "./brdf_lut.frag" };
     Shader mPBRShader = { "./pbr.vert", "./pbr.frag" };
-    Shader mPostShader = { "./post.vert", "./post.frag" };
 };

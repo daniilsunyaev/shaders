@@ -55,8 +55,7 @@ unsigned int loadTexture(char const * tPath) {
   int width, height, nrComponents;
   stbi_set_flip_vertically_on_load(true);
   unsigned char *data = stbi_load(tPath, &width, &height, &nrComponents, 0);
-  if (data)
-  {
+  if (data) {
     GLenum format;
     if (nrComponents == 1)
       format = GL_RED;
@@ -75,9 +74,7 @@ unsigned int loadTexture(char const * tPath) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     stbi_image_free(data);
-  }
-  else
-  {
+  } else {
     std::cout << "Texture failed to load at path: " << tPath << std::endl;
     stbi_image_free(data);
   }

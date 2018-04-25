@@ -22,10 +22,12 @@ void main() {
   vs_out.WorldPos = vec3(model * vec4(aPos, 1.0f));
   vs_out.texCoord = aTexCoord;
 
-  vs_out.TangentToWorld = mat3(aTangent, aBitangent, aNormal);
+  mat3 model3 = mat3(model);
 
-  mat3 normalMatrix = transpose(inverse(mat3(model)));
+  mat3 normalMatrix = transpose(inverse(model3));
   vs_out.Normal = normalize(normalMatrix * aNormal);
+
+  vs_out.TangentToWorld = mat3(model3 * aTangent, model3 * aBitangent, vs_out.Normal);
 
   gl_Position = projection * view * model * vec4(aPos, 1.0);
 }
