@@ -17,7 +17,6 @@ uniform sampler2D relief;
 const float PARALLAX_SCALE = 0.03f;
 const float MIN_LAYERS = 4;
 const float MAX_LAYERS = 20;
-// uniform vec3 lightDir;
 
 int numLayers(vec3 V) {
   return int(
@@ -47,7 +46,6 @@ vec2 texOffset(vec3 V) {
 
   float nextSurfaceDistance = rayHeight - surfaceHeight;
   float prevSurfaceDistance = surfaceHeightPrev - rayHeightPrev;
-  float rel = abs(nextSurfaceDistance / prevSurfaceDistance);
   vec3 lerpBack = rayStep * nextSurfaceDistance/(prevSurfaceDistance + nextSurfaceDistance);
   return (ray - lerpBack).xy;
 }
