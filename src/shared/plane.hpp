@@ -15,7 +15,8 @@ class Plane : public GeometryObject {
     glm::vec3 mColor;
     unsigned int mDiffuseTexture;
 
+    static unsigned int mObjCount;
     static GLuint mVAO;
     static GLuint mVBO;
-    static const float mVerts[8*4];
+    static const float mVerts[14*4];
 };

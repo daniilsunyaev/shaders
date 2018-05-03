@@ -15,6 +15,7 @@ class Sphere : public GeometryObject {
     glm::mat4 mModel;
     glm::vec3 mColor;
     unsigned int mDiffuseTexture;
+    static unsigned int mObjCount;
     static GLuint mVAO;
     static GLuint mVBO;
     static GLuint mEBO;
