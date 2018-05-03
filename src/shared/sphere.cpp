@@ -6,7 +6,7 @@
 #include <iostream>
 
 Sphere::Sphere(glm::mat4 tModel, glm::vec3 tColor) : mModel(tModel), mColor(tColor) {
-  if(mVAO == 0) {
+  if(mObjCount==0){
     generateVertexes();
 
     glGenVertexArrays(1, &mVAO);
@@ -45,7 +45,7 @@ Sphere::Sphere(glm::mat4 tModel, glm::vec3 tColor) : mModel(tModel), mColor(tCol
 }
 
 Sphere::~Sphere() {
-  if(mVAO > 0) {
+  if(mObjCount == 1) {
     glDeleteVertexArrays(1, &mVAO);
     glDeleteBuffers(1, &mVBO);
     glDeleteBuffers(1, &mEBO);
@@ -53,6 +53,7 @@ Sphere::~Sphere() {
     mVBO = 0;
     mEBO = 0;
   }
+  mObjCount--;
 }
 
 void Sphere::generateVertexes() {
@@ -148,6 +149,7 @@ void Sphere::render(Shader* tShader) {
   glBindVertexArray(0);
 }
 
+unsigned int Sphere::mObjCount = 0;
 GLuint Sphere::mVAO = 0;
 GLuint Sphere::mVBO = 0;
 GLuint Sphere::mEBO = 0;
