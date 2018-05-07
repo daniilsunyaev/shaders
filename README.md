@@ -18,14 +18,14 @@ According to https://learnopengl.com/Advanced-Lighting/SSAO
 
 According to https://learnopengl.com/PBR/Theory
 
-![screen space ambient occlusion](./screenshots/pbr.png)
+![Physically Based Rendering](./screenshots/pbr.png)
 
 ## Reflective Shadow Maps
 According to this paper http://www.klayge.org/material/3_12/GI/rsm.pdf
 
 Generally it works, but I was not able to get rid of some of the artifacts.
 
-![screen space ambient occlusion](./screenshots/rsm.png)
+![Reflective Shadow Maps](./screenshots/rsm.png)
 
 Environment cubemaps were taken from [sIBL archive](http://www.hdrlabs.com/sibl/archive.html).
 PBR materials were taken from [FreePBR.com](https://freepbr.com/).
@@ -33,7 +33,7 @@ PBR materials were taken from [FreePBR.com](https://freepbr.com/).
 # Setting up
 
 This project requires OpenGL, SDL2, GLEW, OpenGL Mathematics
-and Cmake to be installed in your system. Once there use cmake to generate a project
+and Cmake to be installed in your system. Once there, use cmake to generate a project
 for your favorite IDE. In case of unix systems and `make` building should be as simple as
 
 ```bash
