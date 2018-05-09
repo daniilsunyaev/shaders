@@ -33,7 +33,7 @@ vec2 texOffset(vec3 V) {
   vec3 ray;
   float rayHeight = 0;
   float rayHeightPrev = 0;
-  float surfaceHeight = -texture(relief, fs_in.texCoord).a*PARALLAX_SCALE;
+  float surfaceHeight = -sign(V.z) * texture(relief, fs_in.texCoord).a*PARALLAX_SCALE;
   float surfaceHeightPrev = surfaceHeight;
 
   while(rayHeight > surfaceHeight) {
@@ -41,7 +41,7 @@ vec2 texOffset(vec3 V) {
     rayHeightPrev = rayHeight;
     rayHeight = ray.z;
     surfaceHeightPrev = surfaceHeight;
-    surfaceHeight = -texture(relief, fs_in.texCoord + ray.xy).a * PARALLAX_SCALE;
+    surfaceHeight = -sign(V.z) * texture(relief, fs_in.texCoord + ray.xy).a * PARALLAX_SCALE;
   }
 
   float nextSurfaceDistance = rayHeight - surfaceHeight;
@@ -54,14 +54,14 @@ float calcLighting(vec3 L, vec2 texCoord) {
   int layers = numLayers(L);
   float shadow = 0;
 
-  float rayHeight = -texture(relief, texCoord).a;
+  float rayHeight = -sign(L.z) * texture(relief, texCoord).a;
   float surfaceHeight = rayHeight;
   vec3 rayStep = L * PARALLAX_SCALE / (abs(L.z) * numLayers(L));
   vec3 ray = vec3(0.0f, 0.0f, rayHeight);
 
   for(int i=0; i<layers; i++) {
     ray += rayStep;
-    surfaceHeight = -texture(relief, texCoord + ray.xy).a;
+    surfaceHeight = -sign(L.z) * texture(relief, texCoord + ray.xy).a;
     float PSF = (surfaceHeight - ray.z)*(1.0f - i/layers);
     shadow = max(shadow, PSF);
   }
