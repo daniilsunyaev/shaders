@@ -21,9 +21,10 @@ Sphere::Sphere(glm::mat4 tModel, glm::vec3 tColor) : mModel(tModel), mColor(tCol
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(unsigned int),
         &mIndices[0], GL_STATIC_DRAW);
 
-    float stride = (3+3+2+3+3)*sizeof(float);
+    GLsizei stride = (3+3+2+3+3)*sizeof(float);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 14 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(2);
@@ -106,7 +107,7 @@ void Sphere::generateVertexes() {
   }
 
   std::vector<float> data;
-  for(int i = 0; i < positions.size(); ++i) {
+  for(unsigned int i = 0; i < positions.size(); ++i) {
     // stride = 14
     mVerts[i*14] = positions[i].x;
     mVerts[i*14+1] = positions[i].y;
@@ -144,7 +145,7 @@ void Sphere::render(Shader* tShader) {
 
   auto sphereIndexCount = mIndices.size();
   glBindVertexArray(mVAO);
-  glDrawElements(GL_TRIANGLE_STRIP, sphereIndexCount, GL_UNSIGNED_INT, 0);
+  glDrawElements(GL_TRIANGLE_STRIP, (int)sphereIndexCount, GL_UNSIGNED_INT, 0);
 
   glBindVertexArray(0);
 }

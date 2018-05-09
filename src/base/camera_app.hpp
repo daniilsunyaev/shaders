@@ -24,9 +24,9 @@ class CameraApp : public App {
     virtual void setUpScene();
     virtual void mainLoopBody();
 
-    double mDeltaTime = 0.0;
-    double mLastFrame = 0.0;
-    double mCurrentFrame = 0.0;
+    float mDeltaTime = 0.0;
+    float mLastFrame = 0.0;
+    float mCurrentFrame = 0.0;
 
     Camera mCamera;
   private:

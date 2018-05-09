@@ -7,7 +7,7 @@
 #include "stb_image.h"
 
 unsigned int loadTextureF(const std::string& tPath) {
-  loadTextureF(tPath.c_str());
+  return loadTextureF(tPath.c_str());
 }
 
 unsigned int loadTextureF(char const * tPath) {
@@ -45,7 +45,7 @@ unsigned int loadTextureF(char const * tPath) {
 }
 
 unsigned int loadTexture(const std::string& tPath) {
-  loadTexture(tPath.c_str());
+  return loadTexture(tPath.c_str());
 }
 
 unsigned int loadTexture(char const * tPath) {
