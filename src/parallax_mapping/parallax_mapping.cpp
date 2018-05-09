@@ -51,7 +51,7 @@ void ParallaxApp::mainLoopBody() {
   glViewport(0, 0, mWindowWidth, mWindowHeight);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  mProjection = glm::perspective(glm::radians(mCamera.Zoom),
+  mProjection = glm::perspective(glm::radians(mCamera.mZoom),
       (float)mWindowWidth / (float)mWindowHeight, 0.1f, 100.0f);
   mView = mCamera.GetViewMatrix();
 
@@ -62,7 +62,7 @@ void ParallaxApp::mainLoopBody() {
   mParallaxMappingShader.setMat4("view", mView);
   mParallaxMappingShader.setMat4("projection", mProjection);
   mParallaxMappingShader.setInt("diffuse", 0);
-  mParallaxMappingShader.setVec3("cameraPosition", mCamera.Position);
+  mParallaxMappingShader.setVec3("cameraPosition", mCamera.mPosition);
   mParallaxMappingShader.setVec3("lightPosition", lightPosition);
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, mDiffuseTexture);

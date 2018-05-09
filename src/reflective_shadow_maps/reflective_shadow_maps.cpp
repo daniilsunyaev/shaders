@@ -204,7 +204,7 @@ void ReflectiveShadowMapsApp::mainLoopBody() {
       glm::vec3(0.0f, 1.0f, 0.0f));  
   mLightSpaceMatrix = lightProjection * lightView;
 
-  mProjection = glm::perspective(glm::radians(mCamera.Zoom),
+  mProjection = glm::perspective(glm::radians(mCamera.mZoom),
       (float)mWindowWidth / (float)mWindowHeight, 0.1f, 100.0f);
   mView = mCamera.GetViewMatrix();
 

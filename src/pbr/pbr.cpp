@@ -119,8 +119,8 @@ void PBRApp::buildPrefilteredEnvMap() {
   unsigned int maxMipLevels = 4;
   for (unsigned int mip = 0; mip < maxMipLevels; mip++) {
     std::cout << "mip " << mip << std::endl;
-    unsigned int mipWidth  = 128 * std::pow(0.5, mip);
-    unsigned int mipHeight = 128 * std::pow(0.5, mip);
+    unsigned int mipWidth  = (unsigned int)(128 * std::pow(0.5, mip));
+    unsigned int mipHeight = (unsigned int)(128 * std::pow(0.5, mip));
     glBindRenderbuffer(GL_RENDERBUFFER, mCaptureRBO);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, mipWidth, mipHeight);
     glViewport(0, 0, mipWidth, mipHeight);
@@ -165,7 +165,7 @@ void PBRApp::mainLoopBody() {
   glBindFramebuffer(GL_FRAMEBUFFER, 0);  
   glClearColor(0.05f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  mProjection = glm::perspective(glm::radians(mCamera.Zoom),
+  mProjection = glm::perspective(glm::radians(mCamera.mZoom),
       (float)mWindowWidth / (float)mWindowHeight, 0.1f, 100.0f);
   mView = mCamera.GetViewMatrix();
 
@@ -174,7 +174,7 @@ void PBRApp::mainLoopBody() {
   mPBRShader.use();
   mPBRShader.setMat4("view", mView);
   mPBRShader.setMat4("projection", mProjection);
-  mPBRShader.setVec3("camPos", mCamera.Position);
+  mPBRShader.setVec3("camPos", mCamera.mPosition);
 
   mPBRShader.setInt("irradianceMap", 0);
   glActiveTexture(GL_TEXTURE0);

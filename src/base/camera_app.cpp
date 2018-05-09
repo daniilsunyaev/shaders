@@ -27,7 +27,7 @@ void CameraApp::run() {
 
     while(mMainLoop) {
       mLastFrame = mCurrentFrame;
-      mCurrentFrame = SDL_GetTicks()*0.001f;
+      mCurrentFrame = (float)SDL_GetTicks() * 0.001f;
       mDeltaTime = mCurrentFrame - mLastFrame;
 
       processInput();
@@ -45,11 +45,11 @@ void CameraApp::setUpScene() {
 void CameraApp::mainLoopBody() {
   // if last seconds digit changed during current frame, print coords
   if(floor(mLastFrame)-floor(mCurrentFrame)!=0) {
-    std::cout << "Camera pos: " << mCamera.Position.x
-      << " " << mCamera.Position.y
-      << " " << mCamera.Position.z << std::endl;
-    std::cout << "pitch: " << mCamera.Pitch
-      << ", yaw: " << mCamera.Yaw << std::endl;
+    std::cout << "Camera pos: " << mCamera.mPosition.x
+      << " " << mCamera.mPosition.y
+      << " " << mCamera.mPosition.z << std::endl;
+    std::cout << "pitch: " << mCamera.mPitch
+      << ", yaw: " << mCamera.mYaw << std::endl;
   }
 }
 
@@ -65,16 +65,16 @@ void CameraApp::processInput() {
     } else if(e.type == SDL_KEYDOWN) {
       switch(e.key.keysym.sym) {
         case SDLK_w:
-          mCamera.ProcessKeyboard(FORWARD, mDeltaTime);
+          mCamera.processKeyboard(FORWARD, mDeltaTime);
           break;
         case SDLK_s:
-          mCamera.ProcessKeyboard(BACKWARD, mDeltaTime);
+          mCamera.processKeyboard(BACKWARD, mDeltaTime);
           break;
         case SDLK_a:
-          mCamera.ProcessKeyboard(LEFT, mDeltaTime);
+          mCamera.processKeyboard(LEFT, mDeltaTime);
           break;
         case SDLK_d:
-          mCamera.ProcessKeyboard(RIGHT, mDeltaTime);
+          mCamera.processKeyboard(RIGHT, mDeltaTime);
           break;
         default:
           break;
@@ -87,10 +87,10 @@ void CameraApp::mouseCallback(SDL_Event &e) {
   if(mFirstMouse) {
     mFirstMouse = false;
   } else {
-    mCamera.ProcessMouseMovement(e.motion.xrel, -e.motion.yrel);
+    mCamera.processMouseMovement((float)e.motion.xrel, (float)-e.motion.yrel);
   } 
 }
 
 void CameraApp::scrollCallback(SDL_Event &e) {
-  mCamera.ProcessMouseScroll(e.wheel.y);
+  mCamera.processMouseScroll((float)e.wheel.y);
 }
