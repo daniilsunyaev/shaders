@@ -32,10 +32,13 @@ vec3 calculate_first_bounces() {
     vec3 emitterNormal = normalize(texture(rNormal, emitterCoords).xyz);
     vec3 emitterDir = emitterPos - fs_in.WorldPos;
 
+    float quadDistance = max(0.001f, dot(emitterDir, emitterDir));
+    // soften up bright pixels in the corners a bit
+
     color += flux
       * max(0, dot(emitterNormal, -emitterDir))
       * max(0, dot(fs_in.Normal, emitterDir))
-      / pow(dot(emitterDir, emitterDir), 2);
+      / pow(quadDistance, 2.0f);
   }
   color *= illuminationArea/float(SAMPLES);
   return color;

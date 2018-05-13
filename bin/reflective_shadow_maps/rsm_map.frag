@@ -13,7 +13,7 @@ layout (location = 2) out vec3 rFlux;
 uniform sampler2D diffuse;
 uniform vec3 L;
 const float lightPower = 5;
-const float scatteringCoefficient = 2e-6f;
+const float scatteringCoefficient = 5e-6f;
 // for sake of simplicity this is constant
 // instead of vertex or texture data
 
