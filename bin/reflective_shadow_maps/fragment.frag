@@ -48,9 +48,9 @@ void main() {
   vec3 apos = texture(lowResPosition, normScrrenCoord).xyz;
   vec3 anorm = texture(lowResNormal, normScrrenCoord).xyz;
   float dist = max(0,length(apos - fs_in.WorldPos)/4.0f -0.1f );
-  illumination = texture(illuminationMap, normScrrenCoord)
-    *(dot(anorm, fs_in.Normal)) // smoothly dark out inputs from wrong points
-    *(1-dist); // using normal and position interpolation
+  illumination = texture(illuminationMap, normScrrenCoord);
+    //*(dot(anorm, fs_in.Normal)) // smoothly dark out inputs from wrong points
+    //*(1-dist); // using normal and position interpolation
 
   vec4 ambient = color * illumination;
 

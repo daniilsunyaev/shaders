@@ -17,7 +17,7 @@ void ReflectiveShadowMapsApp::setUpScene() {
   glEnable(GL_DEPTH_TEST);
   buildGeometry();
   initRSM(2048, 2048);
-  initRSMOffsets(500);
+  initRSMOffsets(300);
   initGIMap(32, 32);
   initHDR();
 }
@@ -55,8 +55,8 @@ void ReflectiveShadowMapsApp::initRSM(int tWidth, int tHeight) {
     glBindTexture(GL_TEXTURE_2D, mRsmTextures[i]);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, tWidth, tHeight,
         0, GL_RGBA, GL_FLOAT, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+i,
         GL_TEXTURE_2D, mRsmTextures[i], 0);
   }
@@ -192,7 +192,7 @@ void ReflectiveShadowMapsApp::mainLoopBody() {
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  mLightPosition.z = 1.0f + 3.0f*sin(0.5f*mCurrentFrame);
+  mLightPosition.z = 1.0f + 3.0f*sin(0.3f*mCurrentFrame);
 
   glm::mat4 lightProjection, lightView;
   glm::mat4 lightSpaceMatrix;
