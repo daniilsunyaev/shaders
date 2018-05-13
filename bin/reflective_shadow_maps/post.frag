@@ -12,6 +12,12 @@ void main()
   //color = vec3(1.0) - exp(-color * 1.8f);
   //color = color/(vec3(1.0f)+color);
   color = vec3(1.0) - exp(-color * 1.2f);
-  color =  pow(color, vec3(1.0 / gamma));
+  float linLimit = 0.03;
+  float a  = 0.05;
+  if(length(color) < linLimit) {
+    color = ((1 + a)*pow(vec3(linLimit), vec3(1.0 / gamma)) - a) * color / linLimit;
+  } else {
+    color =  (1 + a)*pow(color, vec3(1.0 / gamma)) - a;
+  }
   FragColor = vec4(color, 1.0f);
 }  
