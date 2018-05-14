@@ -50,3 +50,5 @@ This will generate binaries for all subprojects in corresponding subfolders
 insinde `bin` folder.
 
 Note that shaders code placed straight inside `bin/<project_name>` for simplicity.
+
+Keep in mind that depending on your version of `cmake` and/or different versions of "find" modules libraries path constant name may change a bit. For example, some versions finding sdl to `SDL2_LIBRARY` and `SDL2_INCLUDE_DIR` while others use `SDL3_LIBRARIES` and `SDL2_INCLUDE_DIR.
