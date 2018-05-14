@@ -60,6 +60,10 @@ void CameraApp::processInput() {
       mMainLoop = false;
     } else if(e.type == SDL_MOUSEMOTION) {
       mouseCallback(e);
+
+    } else if(e.type == SDL_MOUSEBUTTONDOWN) {
+      mMouseLook = !mMouseLook;
+      SDL_SetRelativeMouseMode((SDL_bool)mMouseLook);
     } else if(e.type == SDL_MOUSEWHEEL) {
       scrollCallback(e);
     } else if(e.type == SDL_KEYDOWN) {
@@ -84,11 +88,9 @@ void CameraApp::processInput() {
 }
 
 void CameraApp::mouseCallback(SDL_Event &e) {
-  if(mFirstMouse) {
-    mFirstMouse = false;
-  } else {
+  if(mMouseLook) {
     mCamera.processMouseMovement((float)e.motion.xrel, (float)-e.motion.yrel);
-  } 
+  }
 }
 
 void CameraApp::scrollCallback(SDL_Event &e) {

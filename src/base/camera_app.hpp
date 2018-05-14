@@ -1,13 +1,7 @@
 #pragma once
 
 #include <iostream>
-//#include <GL/glew.h>
 #include <SDL2/SDL.h>
-
-// #include <glm/glm.hpp>
-// #include <glm/gtc/matrix_transform.hpp>
-// #include <glm/gtc/type_ptr.hpp>
-
 #include "app.hpp"
 #include "camera.hpp"
 
@@ -34,6 +28,6 @@ class CameraApp : public App {
     void mouseCallback(SDL_Event &e);
     void scrollCallback(SDL_Event &e);
 
-    bool mFirstMouse = true;
+    bool mMouseLook = false;
     bool mMainLoop = true;
 };
