@@ -53,7 +53,7 @@ Note that shaders code placed straight inside `bin/<project_name>` for simplicit
 
 Keep in mind that depending on your version of `cmake` and/or different versions of "find" modules,
 libraries path constant name may change a bit. For example, some versions placing found sdl path to 
-`SDL2_LIBRARY` and `SDL2_INCLUDE_DIR`, while others use `SDL2_LIBRARIES` and `SDL2_INCLUDE_DIR`.
+`SDL2_LIBRARY` and `SDL2_INCLUDE_DIR`, while others use `SDL2_LIBRARIES` and `SDL2_INCLUDE_DIRS`.
 Take a look into `Modules/FindSDL2.cmake`(and other used scripts) in your cmake folder to get proper
 constant name, and use those in the [base project](https://github.com/daniilsunyaev/shaders/blob/master/src/base/CMakeLists.txt#L11-L15).
 
@@ -61,4 +61,4 @@ constant name, and use those in the [base project](https://github.com/daniilsuny
 
 - use `w,a,s,d` for navigation;
 - click anywhere in the window to toggle mouse look;
-- use mouse scroll wheel to zoom in / zoome out.
+- use mouse scroll wheel to zoom in / zoom out.
