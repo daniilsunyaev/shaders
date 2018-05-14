@@ -213,7 +213,6 @@ void ReflectiveShadowMapsApp::mainLoopBody() {
   mView = mCamera.GetViewMatrix();
 
   renderShadowMaps();
-
   renderGIMaps();
   renderScreenScene();
   performPostProcessing();
