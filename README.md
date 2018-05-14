@@ -20,15 +20,18 @@ According to https://learnopengl.com/PBR/Theory
 
 ![Physically Based Rendering](./screenshots/pbr.png)
 
+Environment cubemaps were taken from [sIBL archive](http://www.hdrlabs.com/sibl/archive.html).
+PBR materials were taken from [FreePBR.com](https://freepbr.com/).
+
 ## Reflective Shadow Maps
 According to this paper http://www.klayge.org/material/3_12/GI/rsm.pdf
 
-Generally it works, but I was not able to get rid of some of the artifacts.
+I have not implemented final interpolation step (with recalculation of
+global illumination at edges), as described in the paper.
+Instead I simply interpolated illumination from low-res texture for
+whole screen. This leads to blurry halos around the objects.
 
 ![Reflective Shadow Maps](./screenshots/rsm.png)
-
-Environment cubemaps were taken from [sIBL archive](http://www.hdrlabs.com/sibl/archive.html).
-PBR materials were taken from [FreePBR.com](https://freepbr.com/).
 
 # Setting up
 

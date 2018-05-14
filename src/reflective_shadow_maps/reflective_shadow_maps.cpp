@@ -15,6 +15,10 @@ ReflectiveShadowMapsApp::ReflectiveShadowMapsApp(
 
 void ReflectiveShadowMapsApp::setUpScene() {
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_CULL_FACE);
+  glFrontFace(GL_CCW);
+  glCullFace(GL_BACK);
+
   buildGeometry();
   initRSM(2048, 2048);
   initRSMOffsets(300);

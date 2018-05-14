@@ -22,10 +22,17 @@ uniform int windowHeight;
 const int PCFsamples = 3;
 const float lightPower = 5;
 
+float calculateBias() {
+  float approximateTexelSize = 1.0f / 1500;
+  float NLTan = tan(acos(dot(fs_in.Normal, normalize(lightDir))));
+
+  return clamp(NLTan * approximateTexelSize, 0.0f, 0.3f);
+}
+
 float shadowAmount() {
   vec3 projCoords = fs_in.FragPosLightSpace.xyz * 0.5f + 0.5f; // to [0,1] range
   float fragmentDepth = projCoords.z;
-  float bias = max(0.005 * (1.0 - dot(fs_in.Normal, lightDir)), 0.005);
+  float bias = calculateBias();
   vec2 texelSize = 1.0f / textureSize(shadowMap, 0);
   float shadow = 0;
   for(int i=-PCFsamples/2; i<=PCFsamples/2; i++) {
