@@ -16,6 +16,10 @@ SSAOApp::SSAOApp(
 
 void SSAOApp::setUpScene() {
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_CULL_FACE);
+  glFrontFace(GL_CCW);
+  glCullFace(GL_BACK);
+
   buildGeometry();
   initGbuffer();
   initRawSSAO();
@@ -146,7 +150,7 @@ void SSAOApp::mainLoopBody() {
   mView = mCamera.GetViewMatrix();
 
   mLightDirection.x = 4.0f*cos(0.5f*mCurrentFrame);
-  mLightDirection.z = 2.0f*sin(0.5f*mCurrentFrame);
+  mLightDirection.z = 4.0f*sin(0.5f*mCurrentFrame);
 
   glViewport(0, 0, mWindowWidth, mWindowHeight);
 

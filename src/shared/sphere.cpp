@@ -72,7 +72,7 @@ void Sphere::generateVertexes() {
 
       float xPos = std::cos(uSegment * 2.0f * PI) * std::sin(vSegment * PI);
       float yPos = std::cos(vSegment * PI);
-      float zPos = std::sin(uSegment * 2.0f * PI) * std::sin(vSegment * PI);
+      float zPos = -std::sin(uSegment * 2.0f * PI) * std::sin(vSegment * PI);
 
       positions.push_back(glm::vec3(xPos, yPos, zPos));
       uv.push_back(glm::vec2(uSegment, vSegment));

@@ -3,7 +3,7 @@ out vec4 FragColor;
 
 in vec2 TexCoords;
 
-const int SAMPLES = 64;
+const int SAMPLES = 20;
 const int ROTATION_SAMPLES_X = 4;
 const int ROTATION_SAMPLES_Y = 4;
 const float RADIUS = 0.3;
