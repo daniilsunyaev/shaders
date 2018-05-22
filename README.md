@@ -1,7 +1,9 @@
 # Set of OpenGL demos
 
 ## Parallax Occlusion Mapping
-(with soft shadows)
+
+A relatively simple technique that adds a depth and shadows to a
+flat texture without adding additional vertices.
 
 According to http://sunandblackcat.com/tipFullView.php?topicid=28
 
@@ -10,11 +12,16 @@ According to http://sunandblackcat.com/tipFullView.php?topicid=28
 
 ## Screen Space Ambient Occlusion
 
+A technique for efficiently approximating the ambient occlusion effect in real time.
+
 According to https://learnopengl.com/Advanced-Lighting/SSAO
 
 ![screen space ambient occlusion](./screenshots/ssao.png)
 
 ## Physically Based Rendering
+
+Shading model seeks to render graphics in a way that more accurately
+models the flow of light in the real world.
 
 According to https://learnopengl.com/PBR/Theory
 
@@ -24,6 +31,11 @@ Environment cubemaps were taken from [sIBL archive](http://www.hdrlabs.com/sibl/
 PBR materials were taken from [FreePBR.com](https://freepbr.com/).
 
 ## Reflective Shadow Maps
+
+An algorithm for interactive rendering of plausible indirect illumination.
+It is an extension to a standard shadow map, where every
+pixel is considered as an indirect light source.
+
 According to this paper http://www.klayge.org/material/3_12/GI/rsm.pdf
 
 I have not implemented final interpolation step (with recalculation of
