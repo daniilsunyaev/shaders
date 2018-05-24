@@ -33,7 +33,7 @@ class Camera {
     const float getYaw() const;
     const float getPitch() const;
     const float getZoom() const;
-    glm::mat4 getViewMatrix() const;
+    const glm::mat4 getViewMatrix() const;
   private:
     void updateCameraVectors();
 

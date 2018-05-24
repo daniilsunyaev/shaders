@@ -20,7 +20,7 @@ Camera::Camera(float tPosX, float tPosY, float tPosZ,
     updateCameraVectors();
   }
 
-glm::mat4 Camera::getViewMatrix() const {
+const glm::mat4 Camera::getViewMatrix() const {
   return glm::lookAt(mPosition, mPosition + mFront, mUp);
 }
 
