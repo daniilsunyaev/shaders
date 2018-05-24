@@ -97,3 +97,7 @@ const int App::getWindowHeight() const {
 const bool App::windowIsInitialized() const {
   return mWindowInitialized;
 }
+
+void App::swapWindow() {
+  SDL_GL_SwapWindow(mWindow);
+}
