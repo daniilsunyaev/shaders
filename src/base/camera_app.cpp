@@ -2,11 +2,7 @@
 
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
-
-//#include <glm/glm.hpp>
-//#include <glm/gtc/matrix_transform.hpp>
-//#include <glm/gtc/type_ptr.hpp>
-
+#include <glm/glm.hpp>
 #include "app.hpp"
 #include "camera_app.hpp"
 #include "camera.hpp"
@@ -15,25 +11,24 @@
 CameraApp::CameraApp(const char* tWindowName,
     const int tWindowWidth, const int tWindowHeight,
     const int tGlMajor, const int tGlMinor) :
-  App(tWindowName, tWindowWidth, tWindowHeight, tGlMajor, tGlMinor) {
-    mCamera = Camera(glm::vec3(0.0f, 0.0f, 1.0f));
-  }
+  App(tWindowName, tWindowWidth, tWindowHeight, tGlMajor, tGlMinor),
+  mCamera(Camera(glm::vec3(0.0f, 0.0f, 1.0f))) {}
 
 CameraApp::~CameraApp() {}
 
 void CameraApp::run() {
-  if(mWindowInitialized) {
+  if(windowIsInitialized()) {
     setUpScene();
 
     while(mMainLoop) {
-      mLastFrame = mCurrentFrame;
-      mCurrentFrame = (float)SDL_GetTicks() * 0.001f;
-      mDeltaTime = mCurrentFrame - mLastFrame;
+      mLastFrameSeconds = mCurrentFrameSeconds;
+      mCurrentFrameSeconds = (float)SDL_GetTicks() * 0.001f;
+      mDeltaTime = mCurrentFrameSeconds - mLastFrameSeconds;
 
       processInput();
       mainLoopBody();
 
-      SDL_GL_SwapWindow(mWindow);
+      swapWindow();
     }
   }
 }
@@ -44,7 +39,7 @@ void CameraApp::setUpScene() {
 
 void CameraApp::mainLoopBody() {
   // if last seconds digit changed during current frame, print coords
-  if(floor(mLastFrame)-floor(mCurrentFrame)!=0) {
+  if(floor(mLastFrameSeconds) - floor(mCurrentFrameSeconds)!=0) {
     std::cout << "Camera pos: " << mCamera.getPosition().x
       << " " << mCamera.getPosition().y
       << " " << mCamera.getPosition().z << std::endl;
@@ -95,4 +90,12 @@ void CameraApp::mouseCallback(SDL_Event &e) {
 
 void CameraApp::scrollCallback(SDL_Event &e) {
   mCamera.processMouseScroll((float)e.wheel.y);
+}
+
+const Camera& CameraApp::getCamera() const {
+  return mCamera;
+}
+
+const float CameraApp::getCurrentFrameSeconds() const {
+  return mCurrentFrameSeconds;
 }

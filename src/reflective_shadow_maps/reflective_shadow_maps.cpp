@@ -174,7 +174,7 @@ void ReflectiveShadowMapsApp::initHDR() {
 
   glGenTextures(1, &mScreenTexture);
   glBindTexture(GL_TEXTURE_2D, mScreenTexture);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, mWindowWidth, mWindowHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, getWindowWidth(), getWindowHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mScreenTexture, 0);
@@ -183,7 +183,7 @@ void ReflectiveShadowMapsApp::initHDR() {
   unsigned int rbo;
   glGenRenderbuffers(1, &rbo);
   glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, mWindowWidth, mWindowHeight);
+  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, getWindowWidth(), getWindowHeight());
   glBindRenderbuffer(GL_RENDERBUFFER, 0);
   glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
@@ -196,7 +196,7 @@ void ReflectiveShadowMapsApp::mainLoopBody() {
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  mLightPosition.z = 1.0f + 3.0f*sin(0.3f*mCurrentFrame);
+  mLightPosition.z = 1.0f + 3.0f * sin(0.3f * getCurrentFrameSeconds());
 
   glm::mat4 lightProjection, lightView;
   glm::mat4 lightSpaceMatrix;
@@ -208,9 +208,9 @@ void ReflectiveShadowMapsApp::mainLoopBody() {
       glm::vec3(0.0f, 1.0f, 0.0f));  
   mLightSpaceMatrix = lightProjection * lightView;
 
-  mProjection = glm::perspective(glm::radians(mCamera.getZoom()),
-      (float)mWindowWidth / (float)mWindowHeight, 0.1f, 100.0f);
-  mView = mCamera.getViewMatrix();
+  mProjection = glm::perspective(glm::radians(getCamera().getZoom()),
+      (float)getWindowWidth() / (float)getWindowHeight(), 0.1f, 100.0f);
+  mView = getCamera().getViewMatrix();
 
   renderShadowMaps();
   renderGIMaps();
@@ -260,14 +260,14 @@ void ReflectiveShadowMapsApp::renderGIMaps() {
 
 void ReflectiveShadowMapsApp::renderScreenScene() {
   glBindFramebuffer(GL_FRAMEBUFFER, mHdrFBO);
-  glViewport(0, 0, mWindowWidth, mWindowHeight);
+  glViewport(0, 0, getWindowWidth(), getWindowHeight());
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
   mRenderShader.use();
   mRenderShader.setVec3("lightDir", mLightPosition);
 
-  mRenderShader.setInt("windowWidth", mWindowWidth);
-  mRenderShader.setInt("windowHeight", mWindowHeight);
+  mRenderShader.setInt("windowWidth", getWindowWidth());
+  mRenderShader.setInt("windowHeight", getWindowHeight());
   mRenderShader.setMat4("view", mView);
   mRenderShader.setMat4("projection", mProjection);
   mRenderShader.setMat4("lightSpaceMatrix", mLightSpaceMatrix);

@@ -48,21 +48,21 @@ void ParallaxApp::buildLight(glm::vec3 tPosition) {
 void ParallaxApp::mainLoopBody() {
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-  glViewport(0, 0, mWindowWidth, mWindowHeight);
+  glViewport(0, 0, getWindowWidth(), getWindowHeight());
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  mProjection = glm::perspective(glm::radians(mCamera.getZoom()),
-      (float)mWindowWidth / (float)mWindowHeight, 0.1f, 100.0f);
-  mView = mCamera.getViewMatrix();
+  mProjection = glm::perspective(glm::radians(getCamera().getZoom()),
+      (float)getWindowWidth() / (float)getWindowHeight(), 0.1f, 100.0f);
+  mView = getCamera().getViewMatrix();
 
-  glm::vec3 lightPosition = glm::vec3(0.0f, 0.0f, -2.0f + sin(3*mCurrentFrame));
+  glm::vec3 lightPosition = glm::vec3(0.0f, 0.0f, -2.0f + sin(3 * getCurrentFrameSeconds()));
   buildLight(lightPosition);
 
   mParallaxMappingShader.use();
   mParallaxMappingShader.setMat4("view", mView);
   mParallaxMappingShader.setMat4("projection", mProjection);
   mParallaxMappingShader.setInt("diffuse", 0);
-  mParallaxMappingShader.setVec3("cameraPosition", mCamera.getPosition());
+  mParallaxMappingShader.setVec3("cameraPosition", getCamera().getPosition());
   mParallaxMappingShader.setVec3("lightPosition", lightPosition);
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, mDiffuseTexture);

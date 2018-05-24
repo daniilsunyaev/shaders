@@ -14,20 +14,20 @@ class CameraApp : public App {
         const int tGlMinor = 3);
     void run();
     virtual ~CameraApp();
+    const Camera& getCamera() const;
+    const float getCurrentFrameSeconds() const;
   protected:
     virtual void setUpScene();
     virtual void mainLoopBody();
-
-    float mDeltaTime = 0.0;
-    float mLastFrame = 0.0;
-    float mCurrentFrame = 0.0;
-
-    Camera mCamera;
   private:
     void processInput();
     void mouseCallback(SDL_Event &e);
     void scrollCallback(SDL_Event &e);
 
+    float mDeltaTime = 0.0;
+    float mLastFrameSeconds = 0.0;
+    float mCurrentFrameSeconds = 0.0;
     bool mMouseLook = false;
     bool mMainLoop = true;
+    Camera mCamera;
 };

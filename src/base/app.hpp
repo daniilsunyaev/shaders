@@ -4,7 +4,6 @@
 #pragma once
 
 #include <iostream>
-
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 
@@ -16,20 +15,23 @@ class App {
         const int tGlMajor = 3,
         const int tGlMinor = 3);
     virtual ~App();
+    void swapWindow();
 
-    SDL_Window* mWindow;
-  protected:
-    const char* mWindowName;
-    int mWindowWidth;
-    int mWindowHeight;
-    bool mWindowInitialized = false;
+    const int getWindowWidth() const;
+    const int getWindowHeight() const;
+    const bool windowIsInitialized() const;
   private:
     int initializeSdl();
     int createWindow();
     int initializeGlew();
     int createGlContext();
 
+    SDL_Window* mWindow;
+    const char* mWindowName;
+    int mWindowWidth;
+    int mWindowHeight;
     int mGlMajor;
     int mGlMinor;
     SDL_GLContext mGlContext;
+    bool mWindowInitialized = false;
 };

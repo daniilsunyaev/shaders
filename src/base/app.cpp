@@ -22,7 +22,7 @@ App::App(const char* tWindowName,
 
     int glewInitError = initializeGlew();
 
-  if(sdlInitError ==0
+  if(sdlInitError == 0
       && windowError == 0
       && glContextError == 0
       && glewInitError == 0) {
@@ -84,4 +84,20 @@ int App::createWindow() {
   }
 
   return 0;
+}
+
+const int App::getWindowWidth() const {
+  return mWindowWidth;
+}
+
+const int App::getWindowHeight() const {
+  return mWindowHeight;
+}
+
+const bool App::windowIsInitialized() const {
+  return mWindowInitialized;
+}
+
+void App::swapWindow() {
+  SDL_GL_SwapWindow(mWindow);
 }

@@ -42,7 +42,7 @@ void SSAOApp::initGbuffer() {
 
   for(int i=0; i<3; i++) {
     glBindTexture(GL_TEXTURE_2D, mGtextures[i]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, mWindowWidth, mWindowHeight,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, getWindowWidth(), getWindowHeight(),
         0, GL_RGBA, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -58,7 +58,7 @@ void SSAOApp::initGbuffer() {
   unsigned int rboDepth;
   glGenRenderbuffers(1, &rboDepth);
   glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
-  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, mWindowWidth, mWindowHeight);
+  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, getWindowWidth(), getWindowHeight());
   glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
      GL_RENDERBUFFER, rboDepth);
 
@@ -75,7 +75,7 @@ void SSAOApp::initRawSSAO() {
   glBindFramebuffer(GL_FRAMEBUFFER, mRawSSAOFBO);
   glGenTextures(1, &mRawSSAOtexture);
   glBindTexture(GL_TEXTURE_2D, mRawSSAOtexture);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, mWindowWidth, mWindowHeight,
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, getWindowWidth(), getWindowHeight(),
       0, GL_RGB, GL_FLOAT, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -91,7 +91,7 @@ void SSAOApp::initBluredSSAO() {
   glBindFramebuffer(GL_FRAMEBUFFER, mBluredSSAOFBO);
   glGenTextures(1, &mBluredSSAOtexture);
   glBindTexture(GL_TEXTURE_2D, mBluredSSAOtexture);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, mWindowWidth, mWindowHeight,
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, getWindowWidth(), getWindowHeight(),
       0, GL_RGB, GL_FLOAT, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -145,14 +145,14 @@ void SSAOApp::initRandomizedLookupHemisphere() {
 
 void SSAOApp::mainLoopBody() {
   glClearColor(0.05f, 0.1f, 0.1f, 1.0f);
-  mProjection = glm::perspective(glm::radians(mCamera.getZoom()),
-      (float)mWindowWidth / (float)mWindowHeight, 0.1f, 100.0f);
-  mView = mCamera.getViewMatrix();
+  mProjection = glm::perspective(glm::radians(getCamera().getZoom()),
+      (float)getWindowWidth() / (float)getWindowHeight(), 0.1f, 100.0f);
+  mView = getCamera().getViewMatrix();
 
-  mLightDirection.x = 4.0f*cos(0.5f*mCurrentFrame);
-  mLightDirection.z = 4.0f*sin(0.5f*mCurrentFrame);
+  mLightDirection.x = 4.0f * cos(0.5f * getCurrentFrameSeconds());
+  mLightDirection.z = 4.0f * sin(0.5f * getCurrentFrameSeconds());
 
-  glViewport(0, 0, mWindowWidth, mWindowHeight);
+  glViewport(0, 0, getWindowWidth(), getWindowHeight());
 
   renderGbuffer();
   renderRawSSAO();
