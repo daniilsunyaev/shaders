@@ -96,3 +96,7 @@ void CameraApp::mouseCallback(SDL_Event &e) {
 void CameraApp::scrollCallback(SDL_Event &e) {
   mCamera.processMouseScroll((float)e.wheel.y);
 }
+
+const Camera& CameraApp::getCamera() const {
+  return mCamera;
+}

@@ -14,6 +14,7 @@ class CameraApp : public App {
         const int tGlMinor = 3);
     void run();
     virtual ~CameraApp();
+    const Camera& getCamera() const;
   protected:
     virtual void setUpScene();
     virtual void mainLoopBody();
@@ -22,7 +23,6 @@ class CameraApp : public App {
     float mLastFrame = 0.0;
     float mCurrentFrame = 0.0;
 
-    Camera mCamera;
   private:
     void processInput();
     void mouseCallback(SDL_Event &e);
@@ -30,4 +30,5 @@ class CameraApp : public App {
 
     bool mMouseLook = false;
     bool mMainLoop = true;
+    Camera mCamera;
 };

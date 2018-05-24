@@ -208,9 +208,9 @@ void ReflectiveShadowMapsApp::mainLoopBody() {
       glm::vec3(0.0f, 1.0f, 0.0f));  
   mLightSpaceMatrix = lightProjection * lightView;
 
-  mProjection = glm::perspective(glm::radians(mCamera.getZoom()),
+  mProjection = glm::perspective(glm::radians(getCamera().getZoom()),
       (float)mWindowWidth / (float)mWindowHeight, 0.1f, 100.0f);
-  mView = mCamera.getViewMatrix();
+  mView = getCamera().getViewMatrix();
 
   renderShadowMaps();
   renderGIMaps();
