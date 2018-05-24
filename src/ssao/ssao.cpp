@@ -149,8 +149,8 @@ void SSAOApp::mainLoopBody() {
       (float)mWindowWidth / (float)mWindowHeight, 0.1f, 100.0f);
   mView = getCamera().getViewMatrix();
 
-  mLightDirection.x = 4.0f*cos(0.5f*mCurrentFrame);
-  mLightDirection.z = 4.0f*sin(0.5f*mCurrentFrame);
+  mLightDirection.x = 4.0f * cos(0.5f * getCurrentFrameSeconds());
+  mLightDirection.z = 4.0f * sin(0.5f * getCurrentFrameSeconds());
 
   glViewport(0, 0, mWindowWidth, mWindowHeight);
 

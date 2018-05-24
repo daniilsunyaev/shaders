@@ -26,9 +26,9 @@ void CameraApp::run() {
     setUpScene();
 
     while(mMainLoop) {
-      mLastFrame = mCurrentFrame;
-      mCurrentFrame = (float)SDL_GetTicks() * 0.001f;
-      mDeltaTime = mCurrentFrame - mLastFrame;
+      mLastFrameSeconds = mCurrentFrameSeconds;
+      mCurrentFrameSeconds = (float)SDL_GetTicks() * 0.001f;
+      mDeltaTime = mCurrentFrameSeconds - mLastFrameSeconds;
 
       processInput();
       mainLoopBody();
@@ -44,7 +44,7 @@ void CameraApp::setUpScene() {
 
 void CameraApp::mainLoopBody() {
   // if last seconds digit changed during current frame, print coords
-  if(floor(mLastFrame)-floor(mCurrentFrame)!=0) {
+  if(floor(mLastFrameSeconds) - floor(mCurrentFrameSeconds)!=0) {
     std::cout << "Camera pos: " << mCamera.getPosition().x
       << " " << mCamera.getPosition().y
       << " " << mCamera.getPosition().z << std::endl;
@@ -99,4 +99,8 @@ void CameraApp::scrollCallback(SDL_Event &e) {
 
 const Camera& CameraApp::getCamera() const {
   return mCamera;
+}
+
+const float CameraApp::getCurrentFrameSeconds() const {
+  return mCurrentFrameSeconds;
 }

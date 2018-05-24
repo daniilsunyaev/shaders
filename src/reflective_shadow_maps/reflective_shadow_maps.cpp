@@ -196,7 +196,7 @@ void ReflectiveShadowMapsApp::mainLoopBody() {
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  mLightPosition.z = 1.0f + 3.0f*sin(0.3f*mCurrentFrame);
+  mLightPosition.z = 1.0f + 3.0f * sin(0.3f * getCurrentFrameSeconds());
 
   glm::mat4 lightProjection, lightView;
   glm::mat4 lightSpaceMatrix;

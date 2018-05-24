@@ -55,7 +55,7 @@ void ParallaxApp::mainLoopBody() {
       (float)mWindowWidth / (float)mWindowHeight, 0.1f, 100.0f);
   mView = getCamera().getViewMatrix();
 
-  glm::vec3 lightPosition = glm::vec3(0.0f, 0.0f, -2.0f + sin(3*mCurrentFrame));
+  glm::vec3 lightPosition = glm::vec3(0.0f, 0.0f, -2.0f + sin(3 * getCurrentFrameSeconds()));
   buildLight(lightPosition);
 
   mParallaxMappingShader.use();
