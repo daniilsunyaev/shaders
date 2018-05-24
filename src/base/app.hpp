@@ -17,19 +17,21 @@ class App {
         const int tGlMinor = 3);
     virtual ~App();
 
+    const int getWindowWidth() const;
+    const int getWindowHeight() const;
+    const bool windowIsInitialized() const;
     SDL_Window* mWindow;
-  protected:
-    const char* mWindowName;
-    int mWindowWidth;
-    int mWindowHeight;
-    bool mWindowInitialized = false;
   private:
     int initializeSdl();
     int createWindow();
     int initializeGlew();
     int createGlContext();
 
+    const char* mWindowName;
+    int mWindowWidth;
+    int mWindowHeight;
     int mGlMajor;
     int mGlMinor;
     SDL_GLContext mGlContext;
+    bool mWindowInitialized = false;
 };

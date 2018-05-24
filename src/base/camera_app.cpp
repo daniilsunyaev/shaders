@@ -21,7 +21,7 @@ CameraApp::CameraApp(const char* tWindowName,
 CameraApp::~CameraApp() {}
 
 void CameraApp::run() {
-  if(mWindowInitialized) {
+  if(windowIsInitialized()) {
     setUpScene();
 
     while(mMainLoop) {

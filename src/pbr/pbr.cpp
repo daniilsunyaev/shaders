@@ -166,10 +166,10 @@ void PBRApp::mainLoopBody() {
   glClearColor(0.05f, 0.1f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   mProjection = glm::perspective(glm::radians(getCamera().getZoom()),
-      (float)mWindowWidth / (float)mWindowHeight, 0.1f, 100.0f);
+      (float)getWindowWidth() / (float)getWindowHeight(), 0.1f, 100.0f);
   mView = getCamera().getViewMatrix();
 
-  glViewport(0, 0, mWindowWidth, mWindowHeight);
+  glViewport(0, 0, getWindowWidth(), getWindowHeight());
 
   mPBRShader.use();
   mPBRShader.setMat4("view", mView);
