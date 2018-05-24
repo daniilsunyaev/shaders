@@ -18,6 +18,25 @@ const float ZOOM       =  45.0f;
 
 class Camera {
   public:
+    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
+        glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f),
+        float yaw = YAW, float pitch = PITCH);
+    Camera(float posX, float posY, float posZ,
+        float upX, float upY, float upZ,
+        float yaw, float pitch);
+    void processKeyboard(Camera_Movement direction, float deltaTime);
+    void processMouseMovement(float xoffset, float yoffset,
+        GLboolean constrainPitch = true);
+    void processMouseScroll(float yoffset);
+
+    const glm::vec3& getPosition() const;
+    const float getYaw() const;
+    const float getPitch() const;
+    const float getZoom() const;
+    glm::mat4 getViewMatrix() const;
+  private:
+    void updateCameraVectors();
+
     glm::vec3 mPosition;
     glm::vec3 mFront;
     glm::vec3 mUp;
@@ -28,17 +47,4 @@ class Camera {
     float mMovementSpeed;
     float mMouseSensitivity;
     float mZoom;
-    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f),
-        float yaw = YAW, float pitch = PITCH);
-    Camera(float posX, float posY, float posZ,
-        float upX, float upY, float upZ,
-        float yaw, float pitch);
-    glm::mat4 GetViewMatrix();
-    void processKeyboard(Camera_Movement direction, float deltaTime);
-    void processMouseMovement(float xoffset, float yoffset,
-        GLboolean constrainPitch = true);
-    void processMouseScroll(float yoffset);
-  private:
-    void updateCameraVectors();
 };

@@ -145,9 +145,9 @@ void SSAOApp::initRandomizedLookupHemisphere() {
 
 void SSAOApp::mainLoopBody() {
   glClearColor(0.05f, 0.1f, 0.1f, 1.0f);
-  mProjection = glm::perspective(glm::radians(mCamera.mZoom),
+  mProjection = glm::perspective(glm::radians(mCamera.getZoom()),
       (float)mWindowWidth / (float)mWindowHeight, 0.1f, 100.0f);
-  mView = mCamera.GetViewMatrix();
+  mView = mCamera.getViewMatrix();
 
   mLightDirection.x = 4.0f*cos(0.5f*mCurrentFrame);
   mLightDirection.z = 4.0f*sin(0.5f*mCurrentFrame);
