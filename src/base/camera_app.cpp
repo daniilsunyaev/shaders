@@ -15,9 +15,8 @@
 CameraApp::CameraApp(const char* tWindowName,
     const int tWindowWidth, const int tWindowHeight,
     const int tGlMajor, const int tGlMinor) :
-  App(tWindowName, tWindowWidth, tWindowHeight, tGlMajor, tGlMinor) {
-    mCamera = Camera(glm::vec3(0.0f, 0.0f, 1.0f));
-  }
+  App(tWindowName, tWindowWidth, tWindowHeight, tGlMajor, tGlMinor),
+  mCamera(Camera(glm::vec3(0.0f, 0.0f, 1.0f))) {}
 
 CameraApp::~CameraApp() {}
 
