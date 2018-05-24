@@ -9,7 +9,6 @@
 
 class Shader {
   public:
-    unsigned int ID;
     Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
     Shader(const GLchar* vertexPath, const GLchar* geometryPath,
         const GLchar* fragmentPath);
@@ -22,5 +21,6 @@ class Shader {
     void setVec3(const std::string &name, float x, float y, float z) const;
     void setVec2(const std::string &name, const glm::vec2 &value) const;
   private:
+    unsigned int ID;
     unsigned int generateShader(const GLchar* path, GLenum shaderType);
 };
