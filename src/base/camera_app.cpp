@@ -45,11 +45,11 @@ void CameraApp::setUpScene() {
 void CameraApp::mainLoopBody() {
   // if last seconds digit changed during current frame, print coords
   if(floor(mLastFrame)-floor(mCurrentFrame)!=0) {
-    std::cout << "Camera pos: " << mCamera.mPosition.x
-      << " " << mCamera.mPosition.y
-      << " " << mCamera.mPosition.z << std::endl;
-    std::cout << "pitch: " << mCamera.mPitch
-      << ", yaw: " << mCamera.mYaw << std::endl;
+    std::cout << "Camera pos: " << mCamera.getPosition().x
+      << " " << mCamera.getPosition().y
+      << " " << mCamera.getPosition().z << std::endl;
+    std::cout << "pitch: " << mCamera.getPitch()
+      << ", yaw: " << mCamera.getYaw() << std::endl;
   }
 }
 

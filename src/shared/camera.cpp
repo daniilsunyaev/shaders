@@ -4,28 +4,23 @@
 #include <iostream>
 
 Camera::Camera(glm::vec3 tPosition, glm::vec3 tUp, float tYaw, float tPitch) :
-  mFront(glm::vec3(0.0f, 0.0f, -1.0f)),
+  mPosition(tPosition),
+  mFront(glm::vec3(0.0f, 0.0f, -1.0f)), mWorldUp(tUp), mYaw(tYaw), mPitch(tPitch),
   mMovementSpeed(SPEED), mMouseSensitivity(SENSITIVTY), mZoom(ZOOM) {
-    mPosition = tPosition;
-   mWorldUp = tUp;
-    mYaw = tYaw;
-    mPitch = tPitch;
     updateCameraVectors();
   }
 
 Camera::Camera(float tPosX, float tPosY, float tPosZ,
     float tUpX, float tUpY, float tUpZ,
     float tYaw, float tPitch) :
+  mPosition(glm::vec3(tPosX, tPosY, tPosZ)),
   mFront(glm::vec3(0.0f, 0.0f, -1.0f)),
+  mWorldUp(glm::vec3(tUpX, tUpY, tUpZ)), mYaw(tYaw), mPitch(tPitch),
   mMovementSpeed(SPEED), mMouseSensitivity(SENSITIVTY), mZoom(ZOOM) {
-    mPosition = glm::vec3(tPosX, tPosY, tPosZ);
-    mWorldUp = glm::vec3(tUpX, tUpY, tUpZ);
-    mYaw = tYaw;
-    mPitch = tPitch;
     updateCameraVectors();
   }
 
-glm::mat4 Camera::GetViewMatrix() {
+const glm::mat4 Camera::getViewMatrix() const {
   return glm::lookAt(mPosition, mPosition + mFront, mUp);
 }
 
@@ -75,4 +70,20 @@ void Camera::updateCameraVectors() {
   mFront = glm::normalize(front);
   mRight = glm::normalize(glm::cross(mFront, mWorldUp));
   mUp = glm::normalize(glm::cross(mRight, mFront));
+}
+
+const glm::vec3& Camera::getPosition() const {
+  return mPosition;
+}
+
+const float Camera::getYaw() const {
+  return mYaw;
+}
+
+const float Camera::getPitch() const {
+  return mPitch;
+}
+
+const float Camera::getZoom() const {
+  return mZoom;
 }
