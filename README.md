@@ -7,8 +7,7 @@ flat texture without adding additional vertices.
 
 According to http://sunandblackcat.com/tipFullView.php?topicid=28
 
-![parallax occlusion mapping](./screenshots/parallax_1.png)
-![parallax occlusion mapping shadows](./screenshots/parallax_2.png)
+![parallax occlusion mapping](./screenshots/parallax.png)
 
 ## Screen Space Ambient Occlusion
 
