@@ -33,8 +33,8 @@ void ParallaxApp::buildGeometry() {
 void ParallaxApp::buildPolygon() {
   auto model = glm::mat4();
   model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
-  model = glm::translate(model, glm::vec3(0.0f, -0.3f, -1.0f));
   model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+  model = glm::translate(model, glm::vec3(0.0f, 0.0f, -0.3f));
   mParallaxMappedPolygon = Plane(model);
 }
 
@@ -55,7 +55,7 @@ void ParallaxApp::mainLoopBody() {
       (float)getWindowWidth() / (float)getWindowHeight(), 0.1f, 100.0f);
   mView = getCamera().getViewMatrix();
 
-  glm::vec3 lightPosition = glm::vec3(0.0f, 0.0f, -2.0f + sin(3 * getCurrentFrameSeconds()));
+  glm::vec3 lightPosition = glm::vec3(0.0f, 0.2f + 0.5f*sin(0.5f*getCurrentFrameSeconds()), sin(3 * getCurrentFrameSeconds()));
   buildLight(lightPosition);
 
   mParallaxMappingShader.use();
